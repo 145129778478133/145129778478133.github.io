@@ -54,7 +54,7 @@
 
 		//Countdown timer initially set to c seconds updating every second
 		var myTimer;
-		var c = 6; 
+		var c = 600; 
 		var infectionRate = 1.04;
 		var delay = 1000;
 
@@ -143,31 +143,31 @@
 
 					if (nbPCInfected == 0) {nbPCInfected = 1;} 
 					else if (nbPCInfected > nbPC || Math.round(nbPCInfected*infectionRate) > nbPC) {nbPCInfected = nbPC; perPCInfected = 100;}
-					else {nbPCInfected = Math.round(nbPCInfected*infectionRate + Math.floor(Math.random() * 10));  perPCInfected = Math.round(nbPCInfected*100/nbPC);}
+					else {nbPCInfected = Math.round(nbPCInfected*infectionRate + Math.floor(Math.random() * 10));  perPCInfected = nbPCInfected*100/nbPC;}
 					nbPCInfectedItem.innerHTML = nbPCInfected.toLocaleString();
 					perPCInfectedItem.innerHTML = perPCInfected + "%";
 					
 					if (nbPhoneInfected == 0) {nbPhoneInfected = 1;} 
 					else if (nbPhoneInfected > nbPhone || Math.round(nbPhoneInfected*infectionRate) > nbPhone) {nbPhoneInfected = nbPhone; perPhoneInfected = 100;}
-					else {nbPhoneInfected = Math.round(nbPhoneInfected*infectionRate + Math.floor(Math.random() * 10));  perPhoneInfected = Math.round(nbPhoneInfected*100/nbPhone);}
+					else {nbPhoneInfected = Math.round(nbPhoneInfected*infectionRate + Math.floor(Math.random() * 10));  perPhoneInfected = nbPhoneInfected*100/nbPhone;}
 					nbPhoneInfectedItem.innerHTML = nbPhoneInfected.toLocaleString();
 					perPhoneInfectedItem.innerHTML = perPhoneInfected + "%";
 					
 					if (nbTVInfected == 0) {nbTVInfected = 1;} 
 					else if (nbTVInfected > nbTV || Math.round(nbTVInfected*infectionRate) > nbTV) {nbTVInfected = nbTV; perTVInfected = 100;}
-					else {nbTVInfected = Math.round(nbTVInfected*infectionRate + Math.floor(Math.random() * 10));  perTVInfected = Math.round(nbTVInfected*100/nbTV);}
+					else {nbTVInfected = Math.round(nbTVInfected*infectionRate + Math.floor(Math.random() * 10));  perTVInfected = nbTVInfected*100/nbTV;}
 					nbTVInfectedItem.innerHTML = nbTVInfected.toLocaleString();
 					perTVInfectedItem.innerHTML = perTVInfected + "%";
 					
 					if (nbServerInfected == 0) {nbServerInfected = 1;} 
 					else if (nbServerInfected > nbServer || Math.round(nbServerInfected*infectionRate) > nbServer) {nbServerInfected = nbServer; perServerInfected = 100;}
-					else {nbServerInfected = Math.round(nbServerInfected*infectionRate + Math.floor(Math.random() * 10));  perServerInfected = Math.round(nbServerInfected*100/nbServer);}
+					else {nbServerInfected = Math.round(nbServerInfected*infectionRate + Math.floor(Math.random() * 10));  perServerInfected = nbServerInfected*100/nbServer;}
 					nbServerInfectedItem.innerHTML = nbServerInfected.toLocaleString();
 					perServerInfectedItem.innerHTML = perServerInfected + "%";
 					
 					if (nbIOTInfected == 0) {nbIOTInfected = 1;} 
 					else if (nbIOTInfected > nbIOT || Math.round(nbIOTInfected*infectionRate) > nbIOT) {nbIOTInfected = nbIOT; perIOTInfected = 100;}
-					else {nbIOTInfected = Math.round(nbIOTInfected*infectionRate + Math.floor(Math.random() * 10));  perIOTInfected = Math.round(nbIOTInfected*100/nbIOT);}
+					else {nbIOTInfected = Math.round(nbIOTInfected*infectionRate + Math.floor(Math.random() * 10));  perIOTInfected = nbIOTInfected*100/nbIOT;}
 					nbIOTInfectedItem.innerHTML = nbIOTInfected.toLocaleString();
 					perIOTInfectedItem.innerHTML = perIOTInfected + "%";
 
@@ -196,7 +196,7 @@
 					document.getElementById("hintId02").innerHTML = document.getElementById("hintId02").innerHTML + "<BR/>Singapore ascending symbol"
 					document.getElementById("hintId03").innerHTML = document.getElementById("hintId03").innerHTML + "<BR/>5¤6-5-6 = ¤"
 					document.getElementById("hintId04").innerHTML = document.getElementById("hintId04").innerHTML + "<BR/>Symbol of nothingness"
-					document.getElementById("hintId05").innerHTML = document.getElementById("hintId05").innerHTML + "<BR/>Mix flexibility with circumstance"
+					document.getElementById("hintId05").innerHTML = document.getElementById("hintId05").innerHTML + "<BR/>Mix some flexibility with some circumstance"
 					document.getElementById("hintId06").innerHTML = document.getElementById("hintId06").innerHTML + "<BR/>#2 in a mirror"
 					document.getElementById("hintId07").innerHTML = document.getElementById("hintId07").innerHTML + "<BR/>Second part of V"
 					errorLabelItem.innerHTML = "Come on H4ppyB1rd, I know your memory is bad but make an effort! Ok, I add some hints for you.";
