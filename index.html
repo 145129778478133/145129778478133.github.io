@@ -31,12 +31,21 @@
 			font-size: 20px;
 		}
 		.incorrectpwdlabel {
-			color: red;B6FF00
+			color: red;
+			font-family: Helvetica;
+			font-weight: bold;
 		}
-		.hint {
+		.hint,a:link {
 			color: #B6FF00;
 			font-style: italic;
 		}
+		.victory {
+			color: #B6FF00;
+			font-family: Calibri;
+			font-weight: bold;
+		}
+
+		
 	</style>
 	<SCRIPT type="text/javascript">
 		// default language
@@ -45,9 +54,12 @@
 
 		//Countdown timer initially set to c seconds updating every second
 		var myTimer;
-		var c = 300; 
+		var c = 6; 
 		var infectionRate = 1.04;
 		var delay = 1000;
+
+		// Nb of times the user tried to enter a password
+		var nbTries = 0;
 		
 		var nbPC = 5415589324;
 		var nbPCInfected = 0;
@@ -98,9 +110,9 @@
 				if (pwdTypedOK) {
 					clearInterval(myTimer);
 					if (pageLanguage == "en") {
-						document.getElementById("viruStatus").innerHTML = "H0ppyB1rdZeroDD virus infection stopped"; }
+						document.getElementById("viruStatus").innerHTML = "H4ppyB1rdZeroDD virus infection stopped"; }
 					else if (pageLanguage == "fr") {
-						document.getElementById("viruStatus").innerHTML = "Infection virus H0ppyB1rdZeroDD stoppée"; }
+						document.getElementById("viruStatus").innerHTML = "Infection virus H4ppyB1rdZeroDD stoppée"; }
 					document.getElementById("viruStatus").className = "viruslaunchstopped";
 					document.body.style.backgroundImage = "url('./images/hb_stopped.gif')";
 				}
@@ -111,18 +123,18 @@
 				else if (c == 0) {
 					document.getElementById("countdown").innerHTML = "";
 					if (pageLanguage == "en") {
-						document.getElementById("viruStatus").innerHTML = "H0ppyB1rdZeroDD virus launched. Infection in progress..."; }
+						document.getElementById("viruStatus").innerHTML = "H4ppyB1rdZeroDD virus launched. Infection in progress..."; }
 					else if (pageLanguage == "fr") {
-						document.getElementById("viruStatus").innerHTML = "Virus H0ppyB1rdZeroDD lancé. Infection en cours..."; }
+						document.getElementById("viruStatus").innerHTML = "Virus H4ppyB1rdZeroDD lancé. Infection en cours..."; }
 					document.body.style.backgroundImage = "url('./images/hb_infecting.gif')";
 				}
 				//infection is complete
 				else if (nbPCInfected + nbPhoneInfected + nbTVInfected + nbServerInfected + nbIOTInfected >= nbPC + nbPhone + nbTV + nbServer + nbIOT) {
 					clearInterval(myTimer);
 					if (pageLanguage == "en") {
-						document.getElementById("viruStatus").innerHTML = "H0ppyB1rdZeroDD virus infection completed"; }
+						document.getElementById("viruStatus").innerHTML = "H4ppyB1rdZeroDD virus infection completed"; }
 					else if (pageLanguage == "fr") {
-						document.getElementById("viruStatus").innerHTML = "Infection virus H0ppyB1rdZeroDD complète"; }
+						document.getElementById("viruStatus").innerHTML = "Infection virus H4ppyB1rdZeroDD complète"; }
 					document.body.style.backgroundImage = "url('./images/hb_completed.gif')";
 				}
 				// infection is in progress
@@ -168,14 +180,56 @@
 		
 		function validatePassword() {
 			typedPwd = document.getElementById("password").value;
+			nbTries = nbTries + 1;
+			var errorLabelItem = document.getElementById("incorrectPwdLabel");
 			if (sha256(typedPwd) == hashed256Pwd) {
 				pwdTypedOK = true;
-				document.getElementById("incorrectPwdLabel").hidden = true;
+				errorLabelItem.className = "victory";
+				if (browserMainLanguage.startsWith("en")) { errorLabelItem.innerHTML = "Victory \\(^0^)/"; }
+				if (browserMainLanguage.startsWith("fr")) { errorLabelItem.innerHTML = "Victoire \\(^0^)/"; }
 				console.log("Victory \\o/");
 			}
 			else {
-				document.getElementById("incorrectPwdLabel").hidden = false;
+				errorLabelItem.className = "incorrectpwdlabel";
+				if (nbTries == 2 && browserMainLanguage.startsWith("en")) { 
+					document.getElementById("hintId01").innerHTML = document.getElementById("hintId01").innerHTML + "<BR/>First part of V"
+					document.getElementById("hintId02").innerHTML = document.getElementById("hintId02").innerHTML + "<BR/>Singapore ascending symbol"
+					document.getElementById("hintId03").innerHTML = document.getElementById("hintId03").innerHTML + "<BR/>5¤6-5-6 = ¤"
+					document.getElementById("hintId04").innerHTML = document.getElementById("hintId04").innerHTML + "<BR/>Symbol of nothingness"
+					document.getElementById("hintId05").innerHTML = document.getElementById("hintId05").innerHTML + "<BR/>Mix flexibility with circumstance"
+					document.getElementById("hintId06").innerHTML = document.getElementById("hintId06").innerHTML + "<BR/>#2 in a mirror"
+					document.getElementById("hintId07").innerHTML = document.getElementById("hintId07").innerHTML + "<BR/>Second part of V"
+					errorLabelItem.innerHTML = "Come on H4ppyB1rd, I know your memory is bad but make an effort! Ok, I add some hints for you.";
+				}
+				if (nbTries == 2 && browserMainLanguage.startsWith("fr")) { 
+					document.getElementById("hintId01").innerHTML = document.getElementById("hintId01").innerHTML + "<BR/>Première partie de V"
+					document.getElementById("hintId02").innerHTML = document.getElementById("hintId02").innerHTML + "<BR/><A href='https://www.rustica.fr/jardiner-avec-lune/comment-savoir-s-s-agit-premier-ou-dernier-quartier-lune,7388.html' target='blanck_'>Lien utile</A>"
+					document.getElementById("hintId03").innerHTML = document.getElementById("hintId03").innerHTML + "<BR/>5¤6-5-6 = ¤"
+					errorLabelItem.innerHTML = "Sans déconner H4ppyB1rd, je sais que votre mémoire n'est pas terrible mais quand même ! Bon, je vous rajoute des indices.";
+				}
+				if (nbTries == 3 && browserMainLanguage.startsWith("en")) {
+					errorLabelItem.innerHTML = "Seriously at this stage there is nothing I can do for you, H4ppyB1rd. Go see a doctor or stick a post-it on your forehead with the @#$*! password!";
+				}
+				if (nbTries == 3 && browserMainLanguage.startsWith("fr")) { errorLabelItem.innerHTML = "Là sérieux je ne peux plus rien pour vous H4ppyB1rd, va falloir consulter un neurologue ou vous coller un post-it sur le front avec le @#$*! de mot de passe !"; }
+				if (nbTries == 4 && browserMainLanguage.startsWith("en")) { errorLabelItem.innerHTML = "No, @#$*! is not the password, if you were wondering..."; }
+				if (nbTries == 4 && browserMainLanguage.startsWith("fr")) { errorLabelItem.innerHTML = "Non, @#$*! n'est pas le mot de passe, si vous vous posiez la question..."; }
+				if (nbTries == 5 && browserMainLanguage.startsWith("en")) { errorLabelItem.innerHTML = "Nope..."; }
+				if (nbTries == 5 && browserMainLanguage.startsWith("fr")) { errorLabelItem.innerHTML = "Négatif..."; }
+				if (nbTries == 6 && browserMainLanguage.startsWith("en")) { errorLabelItem.innerHTML = "Neither!"; }
+				if (nbTries == 6 && browserMainLanguage.startsWith("fr")) { errorLabelItem.innerHTML = "Toujours pas !"; }
+				if (nbTries == 7 && browserMainLanguage.startsWith("en")) { errorLabelItem.innerHTML = "Wrong..."; }
+				if (nbTries == 7 && browserMainLanguage.startsWith("fr")) { errorLabelItem.innerHTML = "Niet camarade"; }
+				if (nbTries == 8 && browserMainLanguage.startsWith("en")) { errorLabelItem.innerHTML = "Not well engaged..."; }
+				if (nbTries == 8 && browserMainLanguage.startsWith("fr")) { errorLabelItem.innerHTML = "Quand ça veut pas..."; }
+				if (nbTries == 9 && browserMainLanguage.startsWith("en")) { errorLabelItem.innerHTML = "Still willing to try at this stage?"; }
+				if (nbTries == 9 && browserMainLanguage.startsWith("fr")) { errorLabelItem.innerHTML = "Vous n'en démordez pas, hein ?"; }
+				if (nbTries == 10 && browserMainLanguage.startsWith("en")) { errorLabelItem.innerHTML = "I really admire your pugnacity!"; }
+				if (nbTries == 10 && browserMainLanguage.startsWith("fr")) { errorLabelItem.innerHTML = "J'admire votre pugnacité !"; }
+				if (nbTries == 11 && browserMainLanguage.startsWith("en")) { errorLabelItem.innerHTML = "Try again..."; }
+				if (nbTries == 11 && browserMainLanguage.startsWith("fr")) { errorLabelItem.innerHTML = "Même joueur joue... encore !"; }
+				errorLabelItem.hidden = false;
 			}
+			errorLabelItem.hidden = false;
 		}
 		
 		// interesting function taken from https://codebeautify.org/sha256-hash-generator
@@ -311,22 +365,22 @@
 		<CENTER>
 
 		<DIV id="TitleDiv" style="">
-			<H1 id="title">Welcome, H0ppyB1rd!</H1>
+			<H1 id="title">Welcome, H4ppyB1rd!</H1>
 		</DIV>
 
 		<DIV id="viruStatus" class="viruslaunchtext">
-			H0ppyB1rdZeroDD virus launch in <span id="countdown"></span>
+			H4ppyB1rdZeroDD virus launch in <span id="countdown"></span>
 		</DIV>
 		
 		<DIV id="arrayDiv" >
 			<span id="infectionRateLabel">Infection rate:</span> <span id="infectionRateSpan"></span>
 			<table border=1>
 				<tr><th id="trDevices">Devices</th><th id="trTotalExisting">Total existing on internet</th><th id="trTotalInfected">Total infected by the virus</th><th id="trPerInfected">% infected</th></tr>
-				<tr><td>PC/tablets</td><td id="nbPC">5,415,589,324</td><td id="nbPCInfected">0</td><td id="perPCInfected">0%</td></tr>
+				<tr><td id="trPC">PC/tablets</td><td id="nbPC">5,415,589,324</td><td id="nbPCInfected">0</td><td id="perPCInfected">0%</td></tr>
 				<tr><td>Smartphones</td><td>5,597,104,285</td><td id="nbPhoneInfected">0</td><td id="perPhoneInfected">0%</td></tr>
 				<tr><td>TVs</td><td>3,259,980,133</td><td id="nbTVInfected">0</td><td id="perTVInfected">0%</td></tr>
-				<tr><td>Servers</td><td>2,550,190,617</td><td id="nbServerInfected">0</td><td id="perServerInfected">0%</td></tr>
-				<tr><td>IOT</td><td>8,331,100,882</td><td id="nbIOTInfected">0</td><td id="perIOTInfected">0%</td></tr>
+				<tr><td id="trServers">Servers</td><td>2,550,190,617</td><td id="nbServerInfected">0</td><td id="perServerInfected">0%</td></tr>
+				<tr><td id="trIOT">IOT</td><td>8,331,100,882</td><td id="nbIOTInfected">0</td><td id="perIOTInfected">0%</td></tr>
 			</table>
 		</DIV>
 		<BR/><BR/>
@@ -344,13 +398,13 @@
 		</DIV>
 		<BR/><BR/>
 		<DIV id="hint">
-			     <span id="hintLb01">Hint</span>#1: <span class="hint" id="hintId01">Racing down the slope toward your right</span>
-			<br/><span id="hintLb02">Hint</span>2: <span class="hint" id="hintId02">Little red dot's flag -*s</span>
-			<br/><span id="hintLb03">Hint</span>#3: <span class="hint" id="hintId03">3^4-3-4=?</span>
-			<br/><span id="hintLb04">Hint</span>#4: <span class="hint" id="hintId04"></span>
-			<br/><span id="hintLb05">Hint</span>#5: <span class="hint" id="hintId05">Be flexible in any circumstance</span>
-			<br/><span id="hintLb06">Hint</span>#6: <span class="hint" id="hintId06">#2's evil twin</span>
-			<br/><span id="hintLb07">Hint</span>#7: <span class="hint" id="hintId07">What went down has to go up</span>
+			#1<br/> <span class="hint" id="hintId01">Racing down the slope toward your right</span>
+			<br/><br/>#2<br/> <span class="hint" id="hintId02">Little red dot's flag -*s</span>
+			<br/><br/>#3<br/> <span class="hint" id="hintId03">3^4-3-4=?</span>
+			<br/><br/>#4<br/> <span class="hint" id="hintId04"></span>
+			<br/><br/>#5<br/> <span class="hint" id="hintId05">Be flexible in any circumstance</span>
+			<br/><br/>#6<br/> <span class="hint" id="hintId06">#2's evil twin</span>
+			<br/><br/>#7<br/> <span class="hint" id="hintId07">What went down has to go up</span>
 		</DIV>
 		
 		<CENTER>
@@ -372,30 +426,25 @@
 		document.getElementById("incorrectPwdLabel").hidden = true;
 		if (browserMainLanguage.startsWith("fr")) {
 			pageLanguage = "fr";
-			document.getElementById("title").innerHTML = "Bienvenue, H0ppyB1rd!";
-			document.getElementById("viruStatus").innerHTML = "Virus H0ppyB1rdZeroDD lancé dans <span id='countdown'></span>";
+			document.getElementById("title").innerHTML = "Bienvenue, H4ppyB1rd!";
+			document.getElementById("viruStatus").innerHTML = "Virus H4ppyB1rdZeroDD lancé dans <span id='countdown'></span>";
 			document.getElementById("infectionRateLabel").innerHTML = "Taux d'infection:";
 			document.getElementById("trDevices").innerHTML = "Appareils";
 			document.getElementById("trTotalExisting").innerHTML = "Total existants sur internet";
 			document.getElementById("trTotalInfected").innerHTML = "Total infectés par le virus";
 			document.getElementById("trPerInfected").innerHTML = "% infectés";
+			document.getElementById("trPC").innerHTML = "% PC/tablettes";
+			document.getElementById("trServers").innerHTML = "Serveurs";
+			document.getElementById("trIOT").innerHTML = "Objets connectés";
 			document.getElementById("cancelLabel").innerHTML = "Pour stopper l'opération, tapez le mot de passe requis";
 			document.getElementById("pwdLabel").innerHTML = "Mot de passe";
 			document.getElementById("incorrectPwdLabel").innerHTML = "Le mot de passe est incorrecte. Vous pouvez essayer de vous le rappeler en utilisant les indices ci-dessous.";
 			
-			document.getElementById("hintLb01").innerHTML = "Indice";
-			document.getElementById("hintLb02").innerHTML = "Indice";
-			document.getElementById("hintLb03").innerHTML = "Indice";
-			document.getElementById("hintLb04").innerHTML = "Indice";
-			document.getElementById("hintLb05").innerHTML = "Indice";
-			document.getElementById("hintLb06").innerHTML = "Indice";
-			document.getElementById("hintLb07").innerHTML = "Indice";
-			
-			document.getElementById("hintId01").innerHTML = "Je dévale vers ta droite";
+			document.getElementById("hintId01").innerHTML = "Je dévale vers ta droite.";
 			document.getElementById("hintId02").innerHTML = "Dernier croissant de lune";
 			document.getElementById("hintId03").innerHTML = "3^4-3-4=?";
 			document.getElementById("hintId04").innerHTML = "";
-			document.getElementById("hintId05").innerHTML = "American Standard Code for Information Interchange: 2 oeufs - 5";
+			document.getElementById("hintId05").innerHTML = "American Standard Code for Information Interchange: un oeuf, un autre oeuf, - 5";
 			document.getElementById("hintId06").innerHTML = "Premier croissant de lune";
 			document.getElementById("hintId07").innerHTML = "Ce qu'on a descendu, il faut le remonter";
 		}		
@@ -432,9 +481,9 @@
 			if (eval(getCookie("pwdTypedOK")) == true) {
 				console.log("getCookie('pwdTypedOK') == true");
 				if (pageLanguage == "en") {
-					document.getElementById("viruStatus").innerHTML = "H0ppyB1rdZeroDD virus infection stopped"; }
+					document.getElementById("viruStatus").innerHTML = "H4ppyB1rdZeroDD virus infection stopped"; }
 				else if (pageLanguage == "fr") {
-					document.getElementById("viruStatus").innerHTML = "Infection virus H0ppyB1rdZeroDD stoppée"; }
+					document.getElementById("viruStatus").innerHTML = "Infection virus H4ppyB1rdZeroDD stoppée"; }
 				document.getElementById("viruStatus").className = "viruslaunchstopped";
 				document.body.style.backgroundImage = "url('./images/hb_stopped.gif')";
 			}
@@ -452,18 +501,18 @@
 				// The infection is already complete
 				else if (nbPCInfected + nbPhoneInfected + nbTVInfected + nbServerInfected + nbIOTInfected >= nbPC + nbPhone + nbTV + nbServer + nbIOT) {
 					if (pageLanguage == "en") {
-						document.getElementById("viruStatus").innerHTML = "H0ppyB1rdZeroDD virus infection completed"; }
+						document.getElementById("viruStatus").innerHTML = "H4ppyB1rdZeroDD virus infection completed"; }
 					else if (pageLanguage == "fr") {
-						document.getElementById("viruStatus").innerHTML = "Infection virus H0ppyB1rdZeroDD complète"; }
+						document.getElementById("viruStatus").innerHTML = "Infection virus H4ppyB1rdZeroDD complète"; }
 					document.body.style.backgroundImage = "url('./images/hb_completed.gif')";
 				}
 				// The infection is still ongoing
 				else {
 					document.getElementById("countdown").innerHTML = "";
 					if (pageLanguage == "en") {
-						document.getElementById("viruStatus").innerHTML = "H0ppyB1rdZeroDD virus launched. Infection in progress..."; }
+						document.getElementById("viruStatus").innerHTML = "H4ppyB1rdZeroDD virus launched. Infection in progress..."; }
 					else if (pageLanguage == "fr") {
-						document.getElementById("viruStatus").innerHTML = "Virus H0ppyB1rdZeroDD lancé. Infection en cours..."; }
+						document.getElementById("viruStatus").innerHTML = "Virus H4ppyB1rdZeroDD lancé. Infection en cours..."; }
 					document.body.style.backgroundImage = "url('./images/hb_infecting.gif')";
 					// There is still time, so the clock is started
 					clock(c);
